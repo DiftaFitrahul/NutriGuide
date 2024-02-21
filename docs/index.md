@@ -1,4 +1,4 @@
-<strong><h1 align="center">NutriGuide</h1></strong><br>
+# NutriGuide
 
 ### A web app to help you get the nutritions you need!
 
