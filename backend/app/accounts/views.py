@@ -19,5 +19,6 @@ def register():
     if user is None:
         user = User(email= email, password= bcrypt.generate_password_hash 
                 (password).decode('utf-8'))
+    
         
         

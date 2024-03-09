@@ -1,5 +1,5 @@
 from flask import Flask
-from app.config.config import Config
+from app.config import Config
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
