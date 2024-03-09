@@ -1,5 +1,6 @@
 from datetime import datetime
 from app import bcrypt, db
+from sqlalchemy import inspect
 import uuid
 
 class User(db.Model):
@@ -18,3 +19,6 @@ class User(db.Model):
         self.password = bcrypt.generate_password_hash(password)
         self.created_on = datetime.now()
         self.is_admin = is_admin
+    
+    def toDict(self):
+        return { c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs }

@@ -3,11 +3,12 @@ from app.config import Config
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from os import environ
+from datetime import timedelta
 
 app = Flask(__name__)
 
 app.config.from_object(Config)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 
 bcrypt = Bcrypt(app)
 db =SQLAlchemy(app)
