@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies
 from werkzeug.security import generate_password_hash
-from app.accounts.models import User, db
+from app.accounts.models import User
+from app.db import db
 
 
 accounts_bp = Blueprint("accounts", __name__)
@@ -34,3 +35,8 @@ def register():
     else:
         print("Makan tuh")
         return jsonify(message="Data sudah ada."), 400
+
+
+@accounts_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get__json()

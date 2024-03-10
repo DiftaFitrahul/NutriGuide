@@ -2,9 +2,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash
 from sqlalchemy import inspect
 import uuid
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app.db import db
 
 
 class User(db.Model):
