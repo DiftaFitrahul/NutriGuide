@@ -70,7 +70,11 @@ export default function Home() {
               <div className="h-full"></div>
               <div className="text-black text-lg pb-[30px]">Username</div>
             </div>
-            <div className="flex flex-auto flex-col w-[50px] h-[50px] ">
+            <div className="flex flex-auto flex-col w-[50px] h-full  overflow-auto">
+              <FoodContentComp />
+              <FoodContentComp />
+              <FoodContentComp />
+              <FoodContentComp />
               <FoodContentComp />
               <FoodContentComp />
               <FoodContentComp />

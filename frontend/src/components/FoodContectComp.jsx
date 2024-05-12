@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function FoodContentComp() {
   return (
-    <div className="flex flex-col lg:flex-row items-start px-[10px] py-[20px] border-b border-black ">
+    <div className="flex flex-col lg:flex-row items-start px-[10px] py-[20px] border-b border-black">
       <Image
         src={"/Data_contoh.png"}
         alt="email"
