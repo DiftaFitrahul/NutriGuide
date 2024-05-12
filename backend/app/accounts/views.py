@@ -7,6 +7,9 @@ from app.mail import mail
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
+from app.gpt import gpt
+import openai
+
 accounts_bp = Blueprint("accounts", __name__)
 s = URLSafeTimedSerializer('this-is-secret')
 
@@ -83,3 +86,16 @@ def login():
         return response, 200
     else:
         return jsonify({"msg": "password invalid"}), 400
+    
+@accounts_bp.route('/ai', methods=['POST'])
+def prompt():
+    data = request.json
+    prompt_text = data['prompt']
+
+    if prompt_text:
+        response_content = gpt(prompt_text)
+        print(response_content)
+
+        return jsonify({"response": response_content}), 200
+    else:
+        return jsonify({"error": "Prompt is empty"}), 400

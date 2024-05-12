@@ -19,10 +19,12 @@ POSTGRES_DB = os.getenv("POSTGRES_DB")
 DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(
     user=POSTGRES_USER, pw=POSTGRES_PW, url=POSTGRES_URL, db=POSTGRES_DB)
 
+OPENAPI_KEY = os.getenv("OPENAI_API_KEY")
 
 class Config(object):
     SQLALCHEMY_DATABASE_URI = DB_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    OPENAPI_KEY = OPENAPI_KEY
     # MAIL_SERVER = MAIL_SERVER
     # MAIL_PORT = MAIL_PORT
     # MAIL_USE_TLS = MAIL_USE_TLS
