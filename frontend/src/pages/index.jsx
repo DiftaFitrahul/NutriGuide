@@ -82,9 +82,18 @@ export default function Home() {
               <FoodContentComp />
               <FoodContentComp />
             </div>
-            <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px] ">
-              <div className="flex flex-col h-3/5 bg-red-500 w-[150px] md:w-[200px]">
-                <h1 className="font-semibold text-black">Trending</h1>
+            <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px]  ">
+              <div className="flex flex-col h-3/5 w-[150px] md:w-[200px] px-[10px] mt-[30px] ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
+                <h1 className="font-semibold text-black py-[10px]">Trending</h1>
+                <TrendingComp
+                  onClickMenu={(data) => {
+                    console.log("makan nasi " + data);
+                  }}
+                />
+                <TrendingComp />
+                <TrendingComp />
+                <TrendingComp />
+                <TrendingComp />
                 <TrendingComp />
               </div>
             </div>

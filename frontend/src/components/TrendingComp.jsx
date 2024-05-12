@@ -1,14 +1,14 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function TrendingComp() {
+export default function TrendingComp({ onClickMenu }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
   return (
-    <div className="flex flex-row items-start justify-between">
+    <div className="flex flex-row items-start justify-between py-[10px]">
       <div className="flex flex-col">
         <p className="text-black font-semibold">Nasi Goreng</p>
         <p className="text-black">110 Calories</p>
@@ -21,6 +21,10 @@ export default function TrendingComp() {
           <div className="py-1" role="menu" aria-orientation="vertical">
             <a
               href="#"
+              onClick={() => {
+                setMenuOpen(false);
+                onClickMenu(true);
+              }}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
             >
@@ -28,6 +32,10 @@ export default function TrendingComp() {
             </a>
             <a
               href="#"
+              onClick={() => {
+                setMenuOpen(false);
+                onClickMenu(true);
+              }}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
             >
@@ -35,6 +43,10 @@ export default function TrendingComp() {
             </a>
             <a
               href="#"
+              onClick={() => {
+                setMenuOpen(false);
+                onClickMenu(true);
+              }}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
             >
