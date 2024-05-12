@@ -1,8 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function RegisterPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   return (
     <>
       <Head>
@@ -30,8 +37,8 @@ export default function RegisterPage() {
                 type="email"
                 className="pl-7 pr-4 py-2 w-[calc(60vw)] sm:w-[calc(25vw-50px)]  sm:min-w-[270px]  border-grey-custom border-b-2 focus:border-placeholder-blue  focus:outline-none bg-transparent   placeholder-white"
                 placeholder="Enter your email address"
-                value={""}
-                onChange={(e) => {}}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -46,16 +53,21 @@ export default function RegisterPage() {
                 />
               </span>
               <input
-                type={"password"}
+                type={showPassword ? "text" : "password"}
                 className="pl-7 pr-4 py-2   w-[calc(60vw)] sm:w-[calc(25vw-50px)] sm:min-w-[270px]  border-grey-custom border-b-2 focus:border-placeholder-blue  focus:outline-none   bg-transparent   placeholder-white "
                 placeholder="Enter your password"
-                value={""}
-                onChange={(e) => {}}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <button type="button" onClick={() => {}}>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 <span className="absolute inset-y-0 right-0 flex items-center ">
                   <Image
-                    src={"/eye_invisible.png"}
+                    src={
+                      showPassword ? "/eye-visible.png" : "/eye-invisible.png"
+                    }
                     alt="email"
                     width={20}
                     height={20}
@@ -77,16 +89,23 @@ export default function RegisterPage() {
                 />
               </span>
               <input
-                type={"password"}
+                type={showConfirmPassword ? "text" : "password"}
                 className="pl-7 pr-4 py-2   w-[calc(60vw)] sm:w-[calc(25vw-50px)] sm:min-w-[270px]  border-grey-custom border-b-2 focus:border-placeholder-blue  focus:outline-none   bg-transparent   placeholder-white "
                 placeholder="Enter your password again"
-                value={""}
-                onChange={(e) => {}}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <button type="button" onClick={() => {}}>
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
                 <span className="absolute inset-y-0 right-0 flex items-center ">
                   <Image
-                    src={"/eye_invisible.png"}
+                    src={
+                      showConfirmPassword
+                        ? "/eye-visible.png"
+                        : "/eye-invisible.png"
+                    }
                     alt="email"
                     width={20}
                     height={20}
