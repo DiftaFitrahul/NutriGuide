@@ -1,13 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
+export default function RegisterPage() {
   return (
     <>
       <Head>
@@ -20,7 +15,7 @@ export default function LoginPage() {
             onSubmit={(e) => {}}
             className="items-center p-[50px] bg-black bg-opacity-[.38] rounded-xl"
           >
-            <h1 className="text-center text-[40px] font-semibold">Sign In</h1>
+            <h1 className="text-center text-[40px] font-semibold">Sign Up</h1>
             <p className="text-grey-custom text-[13px] mt-[40px]">Email</p>
             <div className="relative w-[200px]">
               <span className="absolute inset-y-0 left-0 flex items-center ">
@@ -35,8 +30,8 @@ export default function LoginPage() {
                 type="email"
                 className="pl-7 pr-4 py-2 w-[calc(60vw)] sm:w-[calc(25vw-50px)]  sm:min-w-[270px]  border-grey-custom border-b-2 focus:border-placeholder-blue  focus:outline-none bg-transparent   placeholder-white"
                 placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={""}
+                onChange={(e) => {}}
               />
             </div>
 
@@ -51,23 +46,16 @@ export default function LoginPage() {
                 />
               </span>
               <input
-                type={showPassword ? "text" : "password"}
+                type={"password"}
                 className="pl-7 pr-4 py-2   w-[calc(60vw)] sm:w-[calc(25vw-50px)] sm:min-w-[270px]  border-grey-custom border-b-2 focus:border-placeholder-blue  focus:outline-none   bg-transparent   placeholder-white "
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={""}
+                onChange={(e) => {}}
               />
-              <button
-                type="button"
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
+              <button type="button" onClick={() => {}}>
                 <span className="absolute inset-y-0 right-0 flex items-center ">
                   <Image
-                    src={
-                      showPassword ? "/eye-visible.png" : "/eye-invisible.png"
-                    }
+                    src={"/eye_invisible.png"}
                     alt="email"
                     width={20}
                     height={20}
@@ -76,20 +64,43 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <div className="relative mt-[10px] w-[calc(60vw)] sm:w-full">
-              <Link
-                href=""
-                className="absolute inset-y-0 right-0 flex items-center "
-              >
-                <p className="text-white text-[12px]">Forgot password ?</p>
-              </Link>
+            <p className="text-grey-custom text-[13px] mt-[40px]">
+              Confirm Password
+            </p>
+            <div className="relative w-[calc(60vw)] sm:w-full">
+              <span className="absolute inset-y-0 left-0 flex items-center ">
+                <Image
+                  src="/lock_icon.png"
+                  alt="email"
+                  width={20}
+                  height={20}
+                />
+              </span>
+              <input
+                type={"password"}
+                className="pl-7 pr-4 py-2   w-[calc(60vw)] sm:w-[calc(25vw-50px)] sm:min-w-[270px]  border-grey-custom border-b-2 focus:border-placeholder-blue  focus:outline-none   bg-transparent   placeholder-white "
+                placeholder="Enter your password again"
+                value={""}
+                onChange={(e) => {}}
+              />
+              <button type="button" onClick={() => {}}>
+                <span className="absolute inset-y-0 right-0 flex items-center ">
+                  <Image
+                    src={"/eye_invisible.png"}
+                    alt="email"
+                    width={20}
+                    height={20}
+                  />
+                </span>
+              </button>
             </div>
+
             <div className="flex justify-center items-center w-[calc(60vw)] sm:w-[calc(25vw-50px)] sm:min-w-[270px] ">
               <button
                 type="submit"
                 className=" bg-rose-500 text-white w-[calc(60vw)] sm:w-[calc(25vw-50px)] sm:min-w-[270px]  mt-[50px] bg-primary-blue py-2  rounded-[100px] hover:opacity-90 shadow-auth-button-shadow"
               >
-                Login
+                Register
               </button>
             </div>
           </form>
