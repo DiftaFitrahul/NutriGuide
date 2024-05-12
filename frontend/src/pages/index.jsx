@@ -1,7 +1,9 @@
 import FoodContentComp from "@/components/FoodContectComp";
 import HeaderComp from "@/components/HeaderComp";
+import TrendingComp from "@/components/TrendingComp";
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
   return (
@@ -80,8 +82,11 @@ export default function Home() {
               <FoodContentComp />
               <FoodContentComp />
             </div>
-            <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px] bg-blue-500">
-              Makan nasi
+            <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px] ">
+              <div className="flex flex-col h-3/5 bg-red-500 w-[150px] md:w-[200px]">
+                <h1 className="font-semibold text-black">Trending</h1>
+                <TrendingComp />
+              </div>
             </div>
           </div>
         </div>
