@@ -72,6 +72,9 @@ export default function Home() {
             </div>
             <div className="flex flex-auto flex-col w-[50px] h-[50px] ">
               <FoodContentComp />
+              <FoodContentComp />
+              <FoodContentComp />
+              <FoodContentComp />
             </div>
             <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px] bg-blue-500">
               Makan nasi
