@@ -1,11 +1,21 @@
 import FoodContentComp from "@/components/FoodContectComp";
 import HeaderComp from "@/components/HeaderComp";
+import HistoryComp from "@/components/HistoryComp";
 import TrendingComp from "@/components/TrendingComp";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 
+const SidebarItem = {
+  HOME: "Home",
+  PROFILE: "Profile",
+  RECOMENDER: "Recomender",
+  Bookmark: "Bookmark",
+};
+
 export default function Home() {
+  const [selectedSidebar, setSelectedSidebar] = useState(SidebarItem.HOME);
+
   return (
     <>
       <Head>
@@ -13,7 +23,7 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <main>
-        <HeaderComp title="Home" />
+        <HeaderComp title={selectedSidebar} />
         <div className="flex flex-col justify-center items-center bg-white min-w-full min-h-screen ">
           <div className="flex flex-row justify-between bg-blue-50 w-full h-screen pt-[70px]">
             <div className="flex-1 flex flex-col pl-[20px] items-start min-w-[160px] max-w-[300px]  border-r-2 border-gray">
@@ -22,7 +32,7 @@ export default function Home() {
               </h1>
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => {}}
+                onClick={() => setSelectedSidebar(SidebarItem.HOME)}
               >
                 <Image
                   src={"/home_icon.png"}
@@ -30,12 +40,18 @@ export default function Home() {
                   width={30}
                   height={30}
                 />
-                <p className="pl-[7px]">Home</p>
+                <p
+                  className={`pl-[7px] ${
+                    selectedSidebar === SidebarItem.HOME ? "font-bold" : ""
+                  }`}
+                >
+                  Home
+                </p>
               </button>
 
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => {}}
+                onClick={() => setSelectedSidebar(SidebarItem.PROFILE)}
               >
                 <Image
                   src={"/profile_icon.png"}
@@ -43,11 +59,17 @@ export default function Home() {
                   width={30}
                   height={30}
                 />
-                <p className="pl-[7px]">Profile</p>
+                <p
+                  className={`pl-[7px] ${
+                    selectedSidebar === SidebarItem.PROFILE ? "font-bold" : ""
+                  }`}
+                >
+                  Profile
+                </p>
               </button>
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => {}}
+                onClick={() => setSelectedSidebar(SidebarItem.RECOMENDER)}
               >
                 <Image
                   src={"/recomender_icon.png"}
@@ -55,11 +77,19 @@ export default function Home() {
                   width={30}
                   height={30}
                 />
-                <p className="pl-[7px]">Recomender</p>
+                <p
+                  className={`pl-[7px] ${
+                    selectedSidebar === SidebarItem.RECOMENDER
+                      ? "font-bold"
+                      : ""
+                  }`}
+                >
+                  Recomender
+                </p>
               </button>
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => {}}
+                onClick={() => setSelectedSidebar(SidebarItem.Bookmark)}
               >
                 <Image
                   src={"/bookmark_icon.png"}
@@ -67,7 +97,13 @@ export default function Home() {
                   width={30}
                   height={30}
                 />
-                <p className="pl-[7px]">Bookmark</p>
+                <p
+                  className={`pl-[7px] ${
+                    selectedSidebar === SidebarItem.Bookmark ? "font-bold" : ""
+                  }`}
+                >
+                  Bookmark
+                </p>
               </button>
               <div className="h-full"></div>
               <div className="text-black text-lg pb-[30px]">Username</div>
@@ -83,8 +119,10 @@ export default function Home() {
               <FoodContentComp />
             </div>
             <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px]  ">
-              <div className="flex flex-col h-3/5 w-[150px] md:w-[200px] px-[10px] mt-[30px] ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
-                <h1 className="font-semibold text-black py-[10px]">Trending</h1>
+              <h1 className="font-semibold text-black py-[10px] ml-[40px] mt-[20px]">
+                Trending
+              </h1>
+              <div className="flex flex-col h-3/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
                 <TrendingComp
                   onClickMenu={(data) => {
                     console.log("makan nasi " + data);
@@ -96,6 +134,22 @@ export default function Home() {
                 <TrendingComp />
                 <TrendingComp />
               </div>
+              {selectedSidebar === SidebarItem.RECOMENDER && (
+                <>
+                  <h1 className="font-semibold text-black py-[10px] ml-[40px] mt-[10px]">
+                    History
+                  </h1>
+                  <div className="flex flex-col h-2/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
+                    <HistoryComp />
+                    <HistoryComp />
+                    <HistoryComp />
+                    <HistoryComp />
+                    <HistoryComp />
+                    <HistoryComp />
+                    <HistoryComp />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function TrendingComp({ onClickMenu }) {
+export default function HistoryComp({ onClickMenu }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -10,8 +10,10 @@ export default function TrendingComp({ onClickMenu }) {
   return (
     <div className="flex flex-row items-start justify-between py-[10px]">
       <div className="flex flex-col">
-        <p className="text-black font-semibold ">Nasi Goreng</p>
-        <p className="text-black">110 Calories</p>
+        <p className="text-black font-semibold">
+          Apa yang dimaksud dengan menanam padi di lumpur
+        </p>
+        <p className="text-black">2 Days Ago</p>
       </div>
       <button onClick={toggleMenu}>
         <Image src={"/dot_icon.png"} alt="email" width={30} height={30} />
