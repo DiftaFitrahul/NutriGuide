@@ -4,17 +4,23 @@ import HistoryComp from "@/components/HistoryComp";
 import TrendingComp from "@/components/TrendingComp";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { use, useState } from "react";
+import { Sidebar } from "react-feather";
+import HomeSection from "./home/home_section";
+import ProfileSection from "./profile/profile_section";
+import RecomenderSection from "./recomender/recomender_section";
+import BookmarkSection from "./bookmark/bookmark_section";
 
 const SidebarItem = {
   HOME: "Home",
   PROFILE: "Profile",
   RECOMENDER: "Recomender",
-  Bookmark: "Bookmark",
+  BOOKMARK: "Bookmark",
 };
 
 export default function Home() {
   const [selectedSidebar, setSelectedSidebar] = useState(SidebarItem.HOME);
+  const [currentMainPage, setCurrentMainPage] = useState(<HomeSection />);
 
   return (
     <>
@@ -32,7 +38,10 @@ export default function Home() {
               </h1>
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => setSelectedSidebar(SidebarItem.HOME)}
+                onClick={() => {
+                  setSelectedSidebar(SidebarItem.HOME);
+                  setCurrentMainPage(<HomeSection />);
+                }}
               >
                 <Image
                   src={"/home_icon.png"}
@@ -51,7 +60,10 @@ export default function Home() {
 
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => setSelectedSidebar(SidebarItem.PROFILE)}
+                onClick={() => {
+                  setSelectedSidebar(SidebarItem.PROFILE);
+                  setCurrentMainPage(<ProfileSection />);
+                }}
               >
                 <Image
                   src={"/profile_icon.png"}
@@ -69,7 +81,10 @@ export default function Home() {
               </button>
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => setSelectedSidebar(SidebarItem.RECOMENDER)}
+                onClick={() => {
+                  setSelectedSidebar(SidebarItem.RECOMENDER);
+                  setCurrentMainPage(<RecomenderSection />);
+                }}
               >
                 <Image
                   src={"/recomender_icon.png"}
@@ -89,7 +104,10 @@ export default function Home() {
               </button>
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => setSelectedSidebar(SidebarItem.Bookmark)}
+                onClick={() => {
+                  setSelectedSidebar(SidebarItem.BOOKMARK);
+                  setCurrentMainPage(<BookmarkSection />);
+                }}
               >
                 <Image
                   src={"/bookmark_icon.png"}
@@ -99,7 +117,7 @@ export default function Home() {
                 />
                 <p
                   className={`pl-[7px] ${
-                    selectedSidebar === SidebarItem.Bookmark ? "font-bold" : ""
+                    selectedSidebar === SidebarItem.BOOKMARK ? "font-bold" : ""
                   }`}
                 >
                   Bookmark
@@ -108,6 +126,8 @@ export default function Home() {
               <div className="h-full"></div>
               <div className="text-black text-lg pb-[30px]">Username</div>
             </div>
+            {currentMainPage}
+            {/* 
             <div className="flex flex-auto flex-col w-[50px] h-full  overflow-auto">
               <FoodContentComp />
               <FoodContentComp />
@@ -150,7 +170,7 @@ export default function Home() {
                   </div>
                 </>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </main>
