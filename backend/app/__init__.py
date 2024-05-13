@@ -16,6 +16,7 @@ app.config["JWT_ACCESS_COOKIE_NAME"] = "Authorization"
 bcrypt = Bcrypt(app)
 create_app_db(app)
 create_app_mail(app)
+# create_app_gpt(app)
 
 def create_blueprint():
     from app.accounts.views import accounts_bp
