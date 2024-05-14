@@ -4,8 +4,10 @@ from app.config.config import Config
 from datetime import timedelta
 from app.db import create_app_db
 from app.mail import create_app_mail
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.config.from_pyfile("..\config.cfg")
 app.config.from_object(Config)
@@ -17,6 +19,7 @@ bcrypt = Bcrypt(app)
 create_app_db(app)
 create_app_mail(app)
 # create_app_gpt(app)
+
 
 def create_blueprint():
     from app.accounts.views import accounts_bp
