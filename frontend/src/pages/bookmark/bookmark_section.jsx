@@ -5,7 +5,22 @@ import TrendingComp from "@/components/TrendingComp";
 export default function BookmarkSection() {
   return (
     <>
-      <div className="flex flex-auto flex-col w-[50px] h-full  overflow-auto">
+      <div className="flex-auto grid grid-cols-5 overflow-auto padding-10 place-items-center gap-5 mt-10">
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
+        <BookmarkCard />
         <BookmarkCard />
       </div>
     </>

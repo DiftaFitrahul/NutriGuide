@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import axios from "axios";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -9,6 +10,23 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      return;
+    }
+
+    axios
+      .post("http://localhost:5000/register", {
+        email,
+        password,
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {});
+  }
 
   return (
     <>
@@ -19,7 +37,7 @@ export default function RegisterPage() {
       <main>
         <div className=" flex flex-col justify-center items-center h-screen w-screen bg-[url('../../public/bg.png')] bg-cover relative">
           <form
-            onSubmit={(e) => {}}
+            onSubmit={handleSubmit}
             className="items-center p-[50px] bg-black bg-opacity-[.38] rounded-xl"
           >
             <h1 className="text-center text-[40px] font-semibold">Sign Up</h1>

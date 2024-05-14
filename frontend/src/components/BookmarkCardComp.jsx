@@ -17,15 +17,15 @@ export default function BookmarkCard() {
   //       : subtitle;
 
   return (
-    <div className="flex flex-col w-[270px]   shadow-xl  bg-white rounded-3xl ">
+    <div className="flex flex-col w-[270px] shadow-xl bg-white rounded-3xl ">
       <Image
         src={"/Data_contoh.png"}
         alt="coba"
         width={300}
-        height={300}
+        height={200}
         unoptimized={true}
         objectFit="cover"
-        className="self-center  rounded-xl min-h-[250px] max-h-[250px]"
+        className="self-center  rounded-xl min-h-[200px] max-h-[200px]"
       />
       <div className="flex flex-row items-start mt-4 mx-3 mb-3">
         <div className="flex flex-col items-start ">
