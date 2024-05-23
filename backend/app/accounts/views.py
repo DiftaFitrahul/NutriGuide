@@ -1,14 +1,14 @@
 from flask import Blueprint, request, jsonify, url_for
 from flask_jwt_extended import create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies
 from app.accounts.models import User
+from app.accounts.models import History
 from app.db import db
 from app import bcrypt
 from app.mail import mail
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
-from app.gpt import gpt
-import openai
+from app.gpt import gpt, dall_e
 
 accounts_bp = Blueprint("accounts", __name__)
 s = URLSafeTimedSerializer('this-is-secret')
@@ -91,11 +91,22 @@ def login():
 def prompt():
     data = request.json
     prompt_text = data['prompt']
+    user_id = data['user_id']
+
+    # user = User.query.filter(User.id == user_id).first()
+    # print(user)
 
     if prompt_text:
-        response_content = gpt(prompt_text)
-        print(response_content)
+        gpt_content = gpt(prompt_text)
+        print(gpt_content)
+        dall_e_content = dall_e(gpt_content)
+        print(dall_e_content)
 
-        return jsonify({"response": response_content}), 200
+        # history = History(user_id=user_id, prompt=prompt_text, response=response_content)
+
+        # db.session.add(history)
+        # db.session.commit()
+
+        return jsonify({"response": gpt_content, "image_url": dall_e_content}), 200
     else:
         return jsonify({"error": "Prompt is empty"}), 400

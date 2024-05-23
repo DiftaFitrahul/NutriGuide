@@ -35,15 +35,15 @@ class History(db.Model):
     __tablename__ = "history"
 
     id = db.Column(db.String, primary_key=True)
-    email = db.Column(db.String, db.ForeignKey('users.email'), nullable=False)
+    user_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
     prompt = db.Column(db.String, nullable=False)
     response = db.Column(db.String, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, email, prompt, response):
+    def __init__(self, user_id, prompt, response):
         print("INIT DB")
         self.id = uuid.uuid4()
-        self.email = email
+        self.user_id = user_id
         self.prompt = prompt
         self.response = response
         self.created_on = datetime.now()
