@@ -37,15 +37,38 @@ class History(db.Model):
     id = db.Column(db.String, primary_key=True)
     user_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
     prompt = db.Column(db.String, nullable=False)
+    image_url = db.Column(db.String, nullable=False)
     response = db.Column(db.String, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, user_id, prompt, response):
+    def __init__(self, user_id, prompt, image_url, response):
         print("INIT DB")
         self.id = uuid.uuid4()
         self.user_id = user_id
         self.prompt = prompt
+        self.image_url = image_url
         self.response = response
+        self.created_on = datetime.now()
+
+    def toDict(self):
+        return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+
+class Bookmark(db.Model):
+    __tablename__ = "bookmarks"
+    
+    id = db.Column(db.String, primary_key=True)
+    history_id = db.Column(db.String, ForeignKey('history.id'), nullable=False)
+    user_id = db.Column(db.String, nullable=False)
+    image_url = db.Column(db.String, nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False)
+
+    history = relationship("History", backref="bookmarks")
+
+    def __init__(self, history, image_url):
+        self.id = str(uuid.uuid4())
+        self.history_id = history.id
+        self.user_id = history.user_id
+        self.image_url = image_url
         self.created_on = datetime.now()
 
     def toDict(self):

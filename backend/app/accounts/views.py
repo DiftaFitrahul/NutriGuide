@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, url_for
 from flask_jwt_extended import create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies
 from app.accounts.models import User
 from app.accounts.models import History
+from app.accounts.models import Bookmark
 from app.db import db
 from app import bcrypt
 from app.mail import mail
@@ -97,18 +98,61 @@ def prompt():
 
     # user = User.query.filter(User.id == user_id).first()
     # print(user)
-
+    print(prompt_text)
     if prompt_text:
         gpt_content = gpt(prompt_text)
         print(gpt_content)
-        dall_e_content = dall_e(gpt_content)
+        dall_e_content = dall_e(gpt_content[:900])
         print(dall_e_content)
 
-        # history = History(user_id=user_id, prompt=prompt_text, response=response_content)
+        #history = History(user_id=user_id, prompt=prompt_text, response=gpt_content, image_url=dall_e_content)
 
-        # db.session.add(history)
-        # db.session.commit()
+        #db.session.add(history)
+        #db.session.commit()
 
+        #return jsonify({"id": history.id, "response": gpt_content, "image_url": dall_e_content}), 200
         return jsonify({"response": gpt_content, "image_url": dall_e_content}), 200
     else:
         return jsonify({"error": "Prompt is empty"}), 400
+
+@accounts_bp.route('/users', methods=['GET'])
+def list_users():
+    users = User.query.all()
+    user_list = []
+
+    for user in users:
+        user_info = {
+            "id": user.id,
+            "email": user.email,
+            "is_verified": user.is_verified,
+            "created_on": user.created_on,
+        }
+        user_list.append(user_info)
+
+    return jsonify(user_list), 200
+
+@accounts_bp.route('/add_bookmark', methods=['POST'])
+def add_bookmark():
+    try:
+        data = request.get_json()
+
+        history_id = data.get('history_id')
+
+        if not history_id:
+            return jsonify({"error": "Data tidak sesuai"}), 400
+
+        history_entry = History.query.get(history_id)
+        if not history_entry:
+            return jsonify({"error": "Data tidak ditemukan"}), 404
+
+        new_bookmark = Bookmark(
+            history=history_entry
+        )
+
+        db.session.add(new_bookmark)
+        db.session.commit()
+
+        return jsonify(new_bookmark.toDict()), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
