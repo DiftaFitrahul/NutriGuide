@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log(Cookies.get("Auth"));
+    console.log("Cookies : " + Cookies.get("Auth"));
     if (Cookies.get("Auth") === undefined) {
       toast.error("Anda belum login!", {
         zIndex: 9999,
@@ -33,6 +33,18 @@ export default function Home() {
       setIsLoading(false);
     }
   }, []);
+
+  function logout() {
+    Cookies.remove("Auth");
+    localStorage.removeItem("user_id");
+    toast.success("Berhasil Logout", {
+      zIndex: 9999,
+    });
+    setInterval(() => {
+      window.location.href = "/auth/login";
+      setIsLoading(false);
+    }, 1000);
+  }
 
   return (
     <>
@@ -104,7 +116,18 @@ export default function Home() {
                 <p className={`pl-[7px] }`}>Bookmark</p>
               </button>
               <div className="h-full"></div>
-              <div className="text-black text-lg pb-[30px]">Account</div>
+              <button
+                className="text-black text-lg pb-[30px] flex flex-row items-center"
+                onClick={logout}
+              >
+                <Image
+                  src={"/logout_logo.png"}
+                  alt="email"
+                  width={20}
+                  height={20}
+                />
+                <p className="pl-2 font-semibold">Log Out</p>
+              </button>
             </div>
             <>
               <div className="flex flex-auto flex-col w-[50px] h-full  overflow-auto">

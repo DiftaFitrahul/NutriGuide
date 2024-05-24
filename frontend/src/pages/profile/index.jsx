@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 import TrendingComp from "@/components/TrendingComp";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LoadingContext } from "@/context/LoadingContext";
 import Cookies from "js-cookie";
 

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 import TrendingComp from "@/components/TrendingComp";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoadingContext } from "@/context/LoadingContext";
 import Cookies from "js-cookie";
 
@@ -92,7 +92,7 @@ export default function Recomender() {
       axios
         .post("http://localhost:5000/ai", {
           prompt: inputValue,
-          user_id: "974ac502-ac7c-4031-960f-b58c48799be8",
+          user_id: localStorage.getItem("user_id"),
         })
         .then((res) => {
           console.log(res);

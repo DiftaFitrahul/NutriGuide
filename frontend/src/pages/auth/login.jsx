@@ -1,28 +1,51 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { LoadingContext } from "@/context/LoadingContext";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/authSlice";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const dispatch = useDispatch();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     axios
       .post("http://localhost:5000/login", {
         email,
         password,
       })
       .then((res) => {
-        console.log(res);
-        Cookies.set();
+        Cookies.set("Auth", res.data.access_token, { expires: 1 });
+        localStorage.setItem("user_id", JSON.stringify(res.data.user_id));
+        dispatch(login());
+        setIsLoading(false);
+        toast.success("Login Berhasil!"),
+          {
+            zIndex: 9999,
+          };
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
+        toast.error("Login Gagal!"),
+          {
+            zIndex: 9999,
+          };
       });
   }
 
@@ -39,7 +62,18 @@ export default function LoginPage() {
             className="items-center p-[50px] bg-black bg-opacity-[.38] rounded-xl"
           >
             <h1 className="text-center text-[40px] font-semibold">Sign In</h1>
-            <p className="text-grey-custom text-[13px] mt-[40px]">Email</p>
+            <div className="flex flex-row items-center mt-[20px]">
+              <p>Belum punya akun? </p>
+              <div
+                onClick={() => {
+                  router.push("/auth/register");
+                }}
+                className="ml-2 text-rose-500 font-semibold cursor-pointer"
+              >
+                Register
+              </div>
+            </div>
+            <p className="text-grey-custom text-[13px] mt-[20px]">Email</p>
             <div className="relative w-[200px]">
               <span className="absolute inset-y-0 left-0 flex items-center ">
                 <Image
