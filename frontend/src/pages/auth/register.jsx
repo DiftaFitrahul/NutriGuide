@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,10 @@ export default function RegisterPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (password !== confirmPassword) {
+      toast.error("Register Gagal!"),
+        {
+          zIndex: 9999,
+        };
       return;
     }
 
@@ -23,9 +28,18 @@ export default function RegisterPage() {
         password,
       })
       .then((result) => {
+        toast.success("Register Suskses!"),
+          {
+            zIndex: 9999,
+          };
         console.log(result);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        toast.error(err.response.data.message),
+          {
+            zIndex: 9999,
+          };
+      });
   }
 
   return (

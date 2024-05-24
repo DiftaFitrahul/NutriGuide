@@ -10,14 +10,20 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault();
-    axios.post("http:localhost:5000/login", {
-      email,
-      password
-    }).then((res) =>{
-      Cookies.set()
-    })
+    axios
+      .post("http://localhost:5000/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        Cookies.set();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -29,7 +35,7 @@ export default function LoginPage() {
       <main>
         <div className=" flex flex-col justify-center items-center h-screen w-screen bg-[url('../../public/bg.png')] bg-cover relative">
           <form
-            onSubmit={(e) => {}}
+            onSubmit={handleSubmit}
             className="items-center p-[50px] bg-black bg-opacity-[.38] rounded-xl"
           >
             <h1 className="text-center text-[40px] font-semibold">Sign In</h1>
