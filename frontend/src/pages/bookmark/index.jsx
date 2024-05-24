@@ -4,12 +4,33 @@ import Head from "next/head";
 import HeaderComp from "@/components/HeaderComp";
 import Image from "next/image";
 import BookmarkCard from "@/components/BookmarkCardComp";
+import { toast } from "react-toastify";
 
 import TrendingComp from "@/components/TrendingComp";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { LoadingContext } from "@/context/LoadingContext";
+import Cookies from "js-cookie";
 
 export default function Bookmark() {
   const router = useRouter();
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+
+  useEffect(() => {
+    setIsLoading(true);
+    console.log(Cookies.get("Auth"));
+    if (Cookies.get("Auth") === undefined) {
+      toast.error("Anda belum login!", {
+        zIndex: 9999,
+      });
+      setInterval(() => {
+        window.location.href = "/auth/login";
+        setIsLoading(false);
+      }, 1000);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
   return (
     <>
       <Head>

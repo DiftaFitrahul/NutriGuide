@@ -6,10 +6,13 @@ import Image from "next/image";
 import BookmarkCard from "@/components/BookmarkCardComp";
 // import { Image } from "react-image";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import TrendingComp from "@/components/TrendingComp";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { LoadingContext } from "@/context/LoadingContext";
+import Cookies from "js-cookie";
 
 const Message = ({ prompt, answer }) => {
   const newText = answer.response.split("\n").map((str) => <p>{str}</p>);
@@ -21,6 +24,7 @@ const Message = ({ prompt, answer }) => {
       <div className="flex-1 flex-col  p-2 bg-blue-50 border border-gray-300 rounded-lg  text-black overflow-auto">
         <img src={answer.image_url} className="w-[300px]" />
         <div>{newText}</div>
+        {/* <pre>{answer.response}</pre> */}
       </div>
     </div>
   );
@@ -31,6 +35,24 @@ export default function Recomender() {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
   const latestMessageIndex = messages.length - 1;
+
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+
+  useEffect(() => {
+    setIsLoading(true);
+    console.log(Cookies.get("Auth"));
+    if (Cookies.get("Auth") === undefined) {
+      toast.error("Anda belum login!", {
+        zIndex: 9999,
+      });
+      setInterval(() => {
+        window.location.href = "/auth/login";
+        setIsLoading(false);
+      }, 1000);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);

@@ -4,15 +4,35 @@ import HistoryComp from "@/components/HistoryComp";
 import TrendingComp from "@/components/TrendingComp";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Sidebar } from "react-feather";
 import ProfileSection from "./profile";
 import RecomenderSection from "./recomender";
 import BookmarkSection from "./bookmark";
 import { useRouter } from "next/navigation";
+import { LoadingContext } from "@/context/LoadingContext";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const router = useRouter();
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+
+  useEffect(() => {
+    setIsLoading(true);
+    console.log(Cookies.get("Auth"));
+    if (Cookies.get("Auth") === undefined) {
+      toast.error("Anda belum login!", {
+        zIndex: 9999,
+      });
+      setInterval(() => {
+        window.location.href = "/auth/login";
+        setIsLoading(false);
+      }, 1000);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
     <>
