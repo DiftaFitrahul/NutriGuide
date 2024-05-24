@@ -103,12 +103,13 @@ def prompt():
         dall_e_content = dall_e(gpt_content[:900])
         print(dall_e_content)
 
-        history = History(user_id=user_id, prompt=prompt_text, response=gpt_content, image_url=dall_e_content)
+        #history = History(user_id=user_id, prompt=prompt_text, response=gpt_content, image_url=dall_e_content)
 
-        db.session.add(history)
-        db.session.commit()
+        #db.session.add(history)
+        #db.session.commit()
 
-        return jsonify({"id": history.id, "response": gpt_content, "image_url": dall_e_content}), 200
+        #return jsonify({"id": history.id, "response": gpt_content, "image_url": dall_e_content}), 200
+        return jsonify({"response": gpt_content, "image_url": dall_e_content}), 200
     else:
         return jsonify({"error": "Prompt is empty"}), 400
 
