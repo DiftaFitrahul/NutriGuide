@@ -107,15 +107,17 @@ def prompt():
         dall_e_content = dall_e(gpt_content[:900])
         print(dall_e_content)
 
-        history = History(user_id=user_id, prompt=prompt_text, response=gpt_content, image_url=dall_e_content)
+        history = History(user_id=user_id, prompt=prompt_text,
+                          response=gpt_content, image_url=dall_e_content)
 
         db.session.add(history)
         db.session.commit()
 
         return jsonify({"id": history.id, "response": gpt_content, "image_url": dall_e_content}), 200
-        #return jsonify({"response": gpt_content, "image_url": dall_e_content}), 200
+        # return jsonify({"response": gpt_content, "image_url": dall_e_content}), 200
     else:
         return jsonify({"error": "Prompt is empty"}), 400
+
 
 @accounts_bp.route('/users', methods=['GET'])
 def list_users():
@@ -133,12 +135,13 @@ def list_users():
 
     return jsonify(user_list), 200
 
+
 @accounts_bp.route('/add_bookmark', methods=['POST'])
 def add_bookmark():
     try:
-        data = request.json
+        data = request.get_json()
 
-        history_id = data['history_id']
+        history_id = data.get("history_id")
 
         if not history_id:
             return jsonify({"error": "Data tidak sesuai"}), 400
@@ -156,5 +159,28 @@ def add_bookmark():
 
         return jsonify(new_bookmark.toDict()), 201
 
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@accounts_bp.route('/history', methods=['GET'])
+def get_history():
+    try:
+        data = request.get_json()
+        user_id = data.get("user_id")
+
+        if user_id is None:
+            return jsonify({"error": "data json tidak sesuai"}), 400
+
+        history = History.query.filter_by(user_id=user_id).all()
+
+        if not history:
+            return jsonify(message="success", history=[]), 404
+
+        # Serialize the history records
+        # Ensure you have a to_dict method in your History model
+        history_list = [h.toDict() for h in history]
+
+        return jsonify(message="success", history=history_list), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
