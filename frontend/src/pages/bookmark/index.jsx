@@ -56,6 +56,28 @@ export default function Bookmark() {
       });
   };
 
+  const deleteBookmark = (history_id) => {
+    axios
+      .delete("http://localhost:5000/bookmark", {
+        params: {
+          history_id: history_id,
+          user_id: localStorage.getItem("user_id"),
+        },
+      })
+      .then((res) => {
+        toast.success("Sukses menghapus data bookmarks!!", {
+          zIndex: 9999,
+        });
+        setIsLoading(true);
+        getBookmarks();
+      })
+      .catch((err) => {
+        toast.error("Gagal menghapus data bookmarks!!", {
+          zIndex: 9999,
+        });
+      });
+  };
+
   function logout() {
     Cookies.remove("Auth");
     localStorage.removeItem("user_id");
@@ -157,7 +179,9 @@ export default function Bookmark() {
                     title={message.prompt}
                     imageUrl={message.image_url}
                     date={message.created_on}
-                    onDeleteBookmark={() => {}}
+                    onDeleteBookmark={() => {
+                      deleteBookmark(message.id);
+                    }}
                   />
                 ))}
               </div>
