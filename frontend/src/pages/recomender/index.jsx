@@ -55,23 +55,6 @@ export default function Recomender() {
     }
   }, []);
 
-  const getHistory = () => {
-    axios
-      .get("http://localhost:5000/history", {
-        params: {
-          user_id: localStorage.getItem("user_id"), // Replace with your actual user_id variable
-        },
-      })
-      .then((res) => {
-        setHistory(res.data.history);
-      })
-      .catch((err) => {
-        toast.error("Gagal mendapatkan data history!!", {
-          zIndex: 9999,
-        });
-      });
-  };
-
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -143,6 +126,50 @@ export default function Recomender() {
 
       setInputValue("");
     }
+  };
+  const getHistory = () => {
+    axios
+      .get("http://localhost:5000/history", {
+        params: {
+          user_id: localStorage.getItem("user_id"), // Replace with your actual user_id variable
+        },
+      })
+      .then((res) => {
+        toast.success("Sukses mendapatkan data history!!", {
+          zIndex: 9999,
+        });
+        setHistory(res.data.history);
+      })
+      .catch((err) => {
+        toast.error("Gagal mendapatkan data history!!", {
+          zIndex: 9999,
+        });
+      });
+  };
+
+  const addBookmark = (history_id) => {
+    axios
+      .post("http://localhost:5000/bookmark", {
+        history_id: history_id, // Replace with your actual user_id variable
+        user_id: localStorage.getItem("user_id"),
+      })
+      .then((res) => {
+        console.log(res.data.message);
+        if (res.data.message == "Already bookmarked") {
+          toast.success("Data sudah pernah di bookmark!!", {
+            zIndex: 9999,
+          });
+        } else {
+          toast.success("Sukses menambahkan bookmark!!", {
+            zIndex: 9999,
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error("Gagal menambahkan bookmark!!", {
+          zIndex: 9999,
+        });
+      });
   };
 
   function logout() {
@@ -296,7 +323,11 @@ export default function Recomender() {
                     {history.map((message, index) => (
                       <HistoryComp
                         title={message.prompt}
-                        onClickMenu={() => {}}
+                        onClickMenu={(value) => {
+                          if (value === "Bookmark") {
+                            addBookmark(message.id);
+                          }
+                        }}
                       />
                     ))}
                   </div>
