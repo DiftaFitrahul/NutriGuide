@@ -34,12 +34,13 @@ export default function Recomender() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState([]);
+  const [history, setHistory] = useState([]);
+
   const latestMessageIndex = messages.length - 1;
 
   const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
-    setIsLoading(true);
     console.log(Cookies.get("Auth"));
     if (Cookies.get("Auth") === undefined) {
       toast.error("Anda belum login!", {
@@ -50,21 +51,26 @@ export default function Recomender() {
         setIsLoading(false);
       }, 1000);
     } else {
-      axios
-        .get("http://localhost:5000/history", {
-          user_id: "a671cc68-fb2f-43b2-8065-d21491414557",
-        })
-        .then((res) => {
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          toast.error("Gagal mendapatkan data history!!", {
-            zIndex: 9999,
-          });
-          setIsLoading(false);
-        });
+      getHistory();
     }
   }, []);
+
+  const getHistory = () => {
+    axios
+      .get("http://localhost:5000/history", {
+        params: {
+          user_id: localStorage.getItem("user_id"), // Replace with your actual user_id variable
+        },
+      })
+      .then((res) => {
+        setHistory(res.data.history);
+      })
+      .catch((err) => {
+        toast.error("Gagal mendapatkan data history!!", {
+          zIndex: 9999,
+        });
+      });
+  };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -117,6 +123,7 @@ export default function Recomender() {
             };
             return newarr;
           });
+          getHistory();
         })
         .catch((err) => {
           console.log(err);
@@ -286,13 +293,12 @@ export default function Recomender() {
                     History
                   </h1>
                   <div className="flex flex-col h-2/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
-                    <HistoryComp />
-                    <HistoryComp />
-                    <HistoryComp />
-                    <HistoryComp />
-                    <HistoryComp />
-                    <HistoryComp />
-                    <HistoryComp />
+                    {history.map((message, index) => (
+                      <HistoryComp
+                        title={message.prompt}
+                        onClickMenu={() => {}}
+                      />
+                    ))}
                   </div>
                 </>
               </div>

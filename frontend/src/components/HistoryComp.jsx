@@ -1,20 +1,16 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function HistoryComp({ onClickMenu }) {
+export default function HistoryComp({ title, onClickMenu }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
   return (
-    <div className="flex flex-row items-start justify-between py-[10px]">
-      <div className="flex flex-col">
-        <p className="text-black font-semibold">
-          Apa yang dimaksud dengan menanam padi di lumpur
-        </p>
-      </div>
-      <button onClick={toggleMenu}>
+    <div className="flex flex-row items-center justify-between py-[10px]">
+      <p className="text-black font-semibold ">{title}</p>
+      <button className="flex-shrink-0" onClick={toggleMenu}>
         <Image src={"/dot_icon.png"} alt="email" width={30} height={30} />
       </button>
       {menuOpen && (
@@ -29,7 +25,7 @@ export default function HistoryComp({ onClickMenu }) {
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
             >
-              Option 1
+              Open
             </a>
             <a
               href="#"
@@ -40,18 +36,7 @@ export default function HistoryComp({ onClickMenu }) {
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
             >
-              Option 2
-            </a>
-            <a
-              href="#"
-              onClick={() => {
-                setMenuOpen(false);
-                onClickMenu(true);
-              }}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              role="menuitem"
-            >
-              Option 3
+              Bookmark
             </a>
           </div>
         </div>

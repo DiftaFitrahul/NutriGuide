@@ -31,6 +31,7 @@ export default function Bookmark() {
       setIsLoading(false);
     }
   }, []);
+
   function logout() {
     Cookies.remove("Auth");
     localStorage.removeItem("user_id");
