@@ -188,7 +188,33 @@ def get_bookmark():
             if history_record:
                 history_records.append(history_record.toDict())
 
+        history_records.reverse()
+
         return jsonify(message="success", bookmarks=history_records), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@accounts_bp.route('/bookmark', methods=['DELETE'])
+def delete_bookmark():
+    try:
+        bookmark_id = request.args.get('bookmark_id')
+
+        if not bookmark_id:
+            return jsonify({"error": "Data tidak sesuai"}), 400
+
+        # Find the bookmark by bookmark_id
+        bookmark = Bookmark.query.get(bookmark_id)
+
+        if not bookmark:
+            return jsonify({"error": "Bookmark tidak ditemukan"}), 404
+
+        # Delete the bookmark
+        db.session.delete(bookmark)
+        db.session.commit()
+
+        return jsonify(message="Bookmark berhasil dihapus"), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
