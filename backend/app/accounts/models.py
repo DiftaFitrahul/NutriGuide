@@ -43,7 +43,7 @@ class History(db.Model):
 
     def __init__(self, user_id, prompt, image_url, response):
         print("INIT DB")
-        self.id = uuid.uuid4()
+        self.id = str(uuid.uuid4())
         self.user_id = user_id
         self.prompt = prompt
         self.image_url = image_url
@@ -59,16 +59,15 @@ class Bookmark(db.Model):
     id = db.Column(db.String, primary_key=True)
     history_id = db.Column(db.String, ForeignKey('history.id'), nullable=False)
     user_id = db.Column(db.String, nullable=False)
-    image_url = db.Column(db.String, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False)
 
     history = relationship("History", backref="bookmarks")
 
-    def __init__(self, history, image_url):
+    def __init__(self, history):
+        print("INIT DB")
         self.id = str(uuid.uuid4())
         self.history_id = history.id
         self.user_id = history.user_id
-        self.image_url = image_url
         self.created_on = datetime.now()
 
     def toDict(self):
