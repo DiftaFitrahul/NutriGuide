@@ -50,7 +50,19 @@ export default function Recomender() {
         setIsLoading(false);
       }, 1000);
     } else {
-      setIsLoading(false);
+      axios
+        .get("http://localhost:5000/history", {
+          user_id: "a671cc68-fb2f-43b2-8065-d21491414557",
+        })
+        .then((res) => {
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          toast.error("Gagal mendapatkan data history!!", {
+            zIndex: 9999,
+          });
+          setIsLoading(false);
+        });
     }
   }, []);
 
@@ -113,7 +125,9 @@ export default function Recomender() {
             const latestMessageIndex = newarr.length - 1; // Get the index of the latest message
             newarr[latestMessageIndex] = {
               prompt: inputValue,
-              answer: "Error Happening :(",
+              answer: {
+                response: "Error Happening :(",
+              },
             };
             return newarr;
           });
@@ -123,6 +137,18 @@ export default function Recomender() {
       setInputValue("");
     }
   };
+
+  function logout() {
+    Cookies.remove("Auth");
+    localStorage.removeItem("user_id");
+    toast.success("Berhasil Logout", {
+      zIndex: 9999,
+    });
+    setInterval(() => {
+      window.location.href = "/auth/login";
+      setIsLoading(false);
+    }, 1000);
+  }
   return (
     <>
       <Head>
@@ -193,7 +219,18 @@ export default function Recomender() {
                 <p className="pl-[7px] ">Bookmark</p>
               </button>
               <div className="h-full"></div>
-              <div className="text-black text-lg pb-[30px]">Account</div>
+              <button
+                className="text-black text-lg pb-[30px] flex flex-row items-center"
+                onClick={logout}
+              >
+                <Image
+                  src={"/logout_logo.png"}
+                  alt="email"
+                  width={20}
+                  height={20}
+                />
+                <p className="pl-2 font-semibold">Log Out</p>
+              </button>
             </div>
             <>
               <div className="flex flex-auto flex-col w-[50px] h-full">

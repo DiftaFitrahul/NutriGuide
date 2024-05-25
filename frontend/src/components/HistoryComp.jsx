@@ -13,7 +13,6 @@ export default function HistoryComp({ onClickMenu }) {
         <p className="text-black font-semibold">
           Apa yang dimaksud dengan menanam padi di lumpur
         </p>
-        <p className="text-black">2 Days Ago</p>
       </div>
       <button onClick={toggleMenu}>
         <Image src={"/dot_icon.png"} alt="email" width={30} height={30} />

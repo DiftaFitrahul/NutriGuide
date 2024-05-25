@@ -30,6 +30,18 @@ export default function Profile() {
       setIsLoading(false);
     }
   }, []);
+
+  function logout() {
+    Cookies.remove("Auth");
+    localStorage.removeItem("user_id");
+    toast.success("Berhasil Logout", {
+      zIndex: 9999,
+    });
+    setInterval(() => {
+      window.location.href = "/auth/login";
+      setIsLoading(false);
+    }, 1000);
+  }
   return (
     <>
       <Head>
@@ -97,7 +109,18 @@ export default function Profile() {
                 <p className={`pl-[7px] }`}>Bookmark</p>
               </button>
               <div className="h-full"></div>
-              <div className="text-black text-lg pb-[30px]">Account</div>
+              <button
+                className="text-black text-lg pb-[30px] flex flex-row items-center"
+                onClick={logout}
+              >
+                <Image
+                  src={"/logout_logo.png"}
+                  alt="email"
+                  width={20}
+                  height={20}
+                />
+                <p className="pl-2 font-semibold">Log Out</p>
+              </button>
             </div>
             <>
               <div className="flex flex-auto flex-col w-[50px] h-full  overflow-auto">

@@ -28,7 +28,7 @@ export default function LoginPage() {
       })
       .then((res) => {
         Cookies.set("Auth", res.data.access_token, { expires: 1 });
-        localStorage.setItem("user_id", JSON.stringify(res.data.user_id));
+        localStorage.setItem("user_id", res.data.user_id);
         dispatch(login());
         setIsLoading(false);
         toast.success("Login Berhasil!"),
