@@ -36,7 +36,7 @@ export default function BookmarkCard() {
         </div>
         <button className="ml-[10px]">
           <Image
-            src={"/bookmark_icon.png"}
+            src={"/trash_icon.png"}
             alt="coba"
             width={40}
             height={40}

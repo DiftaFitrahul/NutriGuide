@@ -156,7 +156,7 @@ export default function Recomender() {
       .then((res) => {
         console.log(res.data.message);
         if (res.data.message == "Already bookmarked") {
-          toast.success("Data sudah pernah di bookmark!!", {
+          toast.error("Data sudah pernah di bookmark!!", {
             zIndex: 9999,
           });
         } else {
@@ -299,27 +299,11 @@ export default function Recomender() {
                 </div>
               </div>
               <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px]  ">
-                <h1 className="font-semibold text-black py-[10px] ml-[40px] mt-[20px]">
-                  Trending
-                </h1>
-                <div className="flex flex-col h-3/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
-                  <TrendingComp
-                    onClickMenu={(data) => {
-                      console.log("makan nasi " + data);
-                    }}
-                  />
-                  <TrendingComp />
-                  <TrendingComp />
-                  <TrendingComp />
-                  <TrendingComp />
-                  <TrendingComp />
-                </div>
-
                 <>
                   <h1 className="font-semibold text-black py-[10px] ml-[40px] mt-[10px]">
                     History
                   </h1>
-                  <div className="flex flex-col h-2/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
+                  <div className="flex flex-col h-5/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
                     {history.map((message, index) => (
                       <HistoryComp
                         title={message.prompt}
