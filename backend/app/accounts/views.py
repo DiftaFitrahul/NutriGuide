@@ -94,7 +94,7 @@ def login():
 
 @accounts_bp.route('/ai', methods=['POST'])
 def prompt():
-    data = request.json
+    data = request.get_json()
     prompt_text = data['prompt']
     user_id = data['user_id']
 
@@ -136,7 +136,7 @@ def list_users():
     return jsonify(user_list), 200
 
 
-@accounts_bp.route('/add_bookmark', methods=['POST'])
+@accounts_bp.route('/bookmark', methods=['POST'])
 def add_bookmark():
     try:
         data = request.get_json()
@@ -164,10 +164,9 @@ def add_bookmark():
 
 
 @accounts_bp.route('/history', methods=['GET'])
-def get_history():
+def history():
     try:
-        data = request.get_json()
-        user_id = data.get("user_id")
+        user_id = request.args.get('user_id')
 
         if user_id is None:
             return jsonify({"error": "data json tidak sesuai"}), 400
@@ -175,12 +174,16 @@ def get_history():
         history = History.query.filter_by(user_id=user_id).all()
 
         if not history:
-            return jsonify(message="success", history=[]), 404
+            return jsonify(message="success", history=[]), 200
+
+        # Reverse the order of the history records
+        reversed_history = history[::-1]
 
         # Serialize the history records
-        # Ensure you have a to_dict method in your History model
-        history_list = [h.toDict() for h in history]
+        # Ensure you have a toDict method in your History model
+        history_list = [h.toDict() for h in reversed_history]
 
         return jsonify(message="success", history=history_list), 200
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
