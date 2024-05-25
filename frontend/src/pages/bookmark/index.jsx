@@ -8,13 +8,15 @@ import { toast } from "react-toastify";
 
 import TrendingComp from "@/components/TrendingComp";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoadingContext } from "@/context/LoadingContext";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 export default function Bookmark() {
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const [bookmarks, setBookmarks] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,9 +30,31 @@ export default function Bookmark() {
         setIsLoading(false);
       }, 1000);
     } else {
-      setIsLoading(false);
+      getBookmarks();
     }
   }, []);
+
+  const getBookmarks = () => {
+    axios
+      .get("http://localhost:5000/bookmark", {
+        params: {
+          user_id: localStorage.getItem("user_id"),
+        },
+      })
+      .then((res) => {
+        setBookmarks(res.data.bookmarks);
+        setIsLoading(false);
+        toast.success("Sukses mendapatkan data bookmarks!!", {
+          zIndex: 9999,
+        });
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        toast.error("Gagal mendapatkan data bookmarks!!", {
+          zIndex: 9999,
+        });
+      });
+  };
 
   function logout() {
     Cookies.remove("Auth");
@@ -127,23 +151,15 @@ export default function Bookmark() {
               </button>
             </div>
             <>
-              <div className="flex-auto grid  max-[900px]:grid-cols-1 max-[1250px]:grid-cols-2 max-[1550px]:grid-cols-3 max-[1800px]:grid-cols-4 grid-cols-5 overflow-auto padding-10 place-items-center gap-5 mt-10">
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
-                <BookmarkCard />
+              <div className="flex-auto grid items-start  max-[900px]:grid-cols-1 max-[1250px]:grid-cols-2 max-[1550px]:grid-cols-3 max-[1800px]:grid-cols-4 grid-cols-5 overflow-auto padding-10 place-items-center gap-5 mt-10">
+                {bookmarks.map((message, index) => (
+                  <BookmarkCard
+                    title={message.prompt}
+                    imageUrl={message.image_url}
+                    date={message.created_on}
+                    onDeleteBookmark={() => {}}
+                  />
+                ))}
               </div>
             </>
           </div>
