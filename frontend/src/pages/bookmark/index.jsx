@@ -127,7 +127,7 @@ export default function Bookmark() {
               </button>
             </div>
             <>
-              <div className="flex-auto grid grid-cols-5 overflow-auto padding-10 place-items-center gap-5 mt-10">
+              <div className="flex-auto grid  max-[900px]:grid-cols-1 max-[1250px]:grid-cols-2 max-[1550px]:grid-cols-3 max-[1800px]:grid-cols-4 grid-cols-5 overflow-auto padding-10 place-items-center gap-5 mt-10">
                 <BookmarkCard />
                 <BookmarkCard />
                 <BookmarkCard />

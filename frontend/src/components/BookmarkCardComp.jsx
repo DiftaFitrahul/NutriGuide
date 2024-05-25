@@ -17,7 +17,7 @@ export default function BookmarkCard() {
   //       : subtitle;
 
   return (
-    <div className="flex flex-col w-[270px] shadow-xl bg-white rounded-3xl ">
+    <div className="flex flex-col max-[350px]:w-[100px] max-[500px]:w-[170px] max-[600px]:w-[200px] w-[270px] shadow-xl bg-white rounded-3xl ">
       <Image
         src={"/Data_contoh.png"}
         alt="coba"
