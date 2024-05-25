@@ -1,19 +1,30 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { LoadingContext } from "@/context/LoadingContext";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (password !== confirmPassword) {
+      toast.error("Register Gagal!"),
+        {
+          zIndex: 9999,
+        };
       return;
     }
 
@@ -23,9 +34,24 @@ export default function RegisterPage() {
         password,
       })
       .then((result) => {
-        console.log(result);
+        setIsLoading(false);
+        toast.success(
+          "Register Berhasil! Silahkan Verifikasi Email dan Login!"
+        ),
+          {
+            zIndex: 9999,
+          };
+        setTimeout(() => {
+          window.location.href = "/auth/login";
+        }, 1000);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsLoading(false);
+        toast.error("Register Gagal!"),
+          {
+            zIndex: 9999,
+          };
+      });
   }
 
   return (
@@ -41,7 +67,18 @@ export default function RegisterPage() {
             className="items-center p-[50px] bg-black bg-opacity-[.38] rounded-xl"
           >
             <h1 className="text-center text-[40px] font-semibold">Sign Up</h1>
-            <p className="text-grey-custom text-[13px] mt-[40px]">Email</p>
+            <div className="flex flex-row items-center mt-[20px]">
+              <p>Sudah punya akun? </p>
+              <div
+                onClick={() => {
+                  router.back();
+                }}
+                className="ml-2 text-rose-500 font-semibold cursor-pointer"
+              >
+                Login
+              </div>
+            </div>
+            <p className="text-grey-custom text-[13px] mt-[20px]">Email</p>
             <div className="relative w-[200px]">
               <span className="absolute inset-y-0 left-0 flex items-center ">
                 <Image
