@@ -142,6 +142,7 @@ def add_bookmark():
         data = request.get_json()
 
         history_id = data.get("history_id")
+        user_id = data.get("user_id")
 
         if not history_id:
             return jsonify({"error": "Data tidak sesuai"}), 400
@@ -149,6 +150,11 @@ def add_bookmark():
         history_entry = History.query.get(history_id)
         if not history_entry:
             return jsonify({"error": "Data tidak ditemukan"}), 404
+
+        existing_bookmark = Bookmark.query.filter_by(
+            user_id=user_id, history_id=history_id).first()
+        if existing_bookmark:
+            return jsonify({"message": "Already bookmarked"}), 200
 
         new_bookmark = Bookmark(
             history=history_entry
@@ -158,6 +164,31 @@ def add_bookmark():
         db.session.commit()
 
         return jsonify(new_bookmark.toDict()), 201
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@accounts_bp.route('/bookmark', methods=['GET'])
+def get_bookmark():
+    try:
+        user_id = request.args.get('user_id')
+
+        if not user_id:
+            return jsonify({"error": "Data tidak sesuai"}), 400
+
+        list_bookmark = Bookmark.query.filter_by(user_id=user_id).all()
+
+        if not list_bookmark:
+            return jsonify(message="success", bookmarks=[]), 200
+
+        history_records = []
+        for bookmark in list_bookmark:
+            history_record = History.query.get(bookmark.history_id)
+            if history_record:
+                history_records.append(history_record.toDict())
+
+        return jsonify(message="success", bookmarks=history_records), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
