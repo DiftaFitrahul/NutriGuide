@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/router";
 
-export default function detailHistory() {
+export default function DetailHistory() {
   const router = useRouter();
   const dataHistory = router.query;
   const newDate = new Date(dataHistory.created_on);

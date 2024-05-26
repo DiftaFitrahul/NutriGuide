@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/router";
 
-export default function detailTrending() {
+export default function DetailTrending() {
   const router = useRouter();
   const dataTrending = router.query;
   const newDate = new Date(dataTrending.created_on);
