@@ -15,7 +15,9 @@ import { LoadingContext } from "@/context/LoadingContext";
 import Cookies from "js-cookie";
 
 const Message = ({ prompt, answer }) => {
-  const newText = answer.response.split("\n").map((str) => <p>{str}</p>);
+  const newText = answer.response
+    .split("\n")
+    .map((str, index) => <p key={index}>{str}</p>);
   return (
     <div className="flex flex-col w-full my-5 px-3">
       <div className="flex self-end  w-1/2 py-2 px-3 bg-slate-100 border border-gray-300 rounded-lg  text-black mb-2 overflow-auto">
@@ -292,6 +294,7 @@ export default function Recomender() {
                   <div className="flex flex-col h-5/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
                     {history.map((message, index) => (
                       <HistoryComp
+                        key={index}
                         title={message.prompt}
                         onClickMenu={(value) => {
                           if (value === "Bookmark") {

@@ -179,6 +179,7 @@ export default function Home() {
                 <div className="flex flex-col h-3/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
                   {trending.map((message, index) => (
                     <TrendingComp
+                    key={message.id}
                       title={message.title}
                       onClickMenu={() => {
                         router.push({
