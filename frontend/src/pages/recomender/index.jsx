@@ -310,6 +310,11 @@ export default function Recomender() {
                         onClickMenu={(value) => {
                           if (value === "Bookmark") {
                             addBookmark(message.id);
+                          } else {
+                            router.push({
+                              pathname: "/detail/history",
+                              query: message,
+                            });
                           }
                         }}
                       />
