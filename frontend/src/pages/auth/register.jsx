@@ -29,7 +29,7 @@ export default function RegisterPage() {
     }
 
     axios
-      .post("http://localhost:5000/register", {
+      .post(process.env.NEXT_PUBLIC_BACKEND_URL + "/register", {
         email,
         password,
       })

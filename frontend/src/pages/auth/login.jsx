@@ -22,7 +22,7 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     axios
-      .post("http://localhost:5000/login", {
+      .post(process.env.NEXT_PUBLIC_BACKEND_URL + "/login", {
         email,
         password,
       })

@@ -36,7 +36,7 @@ export default function Bookmark() {
 
   const getBookmarks = () => {
     axios
-      .get("http://localhost:5000/bookmark", {
+      .get(process.env.NEXT_PUBLIC_BACKEND_URL + "/bookmark", {
         params: {
           user_id: localStorage.getItem("user_id"),
         },
@@ -58,7 +58,7 @@ export default function Bookmark() {
 
   const deleteBookmark = (history_id) => {
     axios
-      .delete("http://localhost:5000/bookmark", {
+      .delete(process.env.NEXT_PUBLIC_BACKEND_URL + "/bookmark", {
         params: {
           history_id: history_id,
           user_id: localStorage.getItem("user_id"),

@@ -91,7 +91,7 @@ export default function Recomender() {
       // }, 1000);
 
       axios
-        .post("http://localhost:5000/ai", {
+        .post(process.env.NEXT_PUBLIC_BACKEND_URL + "/ai", {
           prompt: inputValue,
           user_id: localStorage.getItem("user_id"),
         })
@@ -129,7 +129,7 @@ export default function Recomender() {
   };
   const getHistory = () => {
     axios
-      .get("http://localhost:5000/history", {
+      .get(process.env.NEXT_PUBLIC_BACKEND_URL + "/history", {
         params: {
           user_id: localStorage.getItem("user_id"), // Replace with your actual user_id variable
         },
@@ -149,7 +149,7 @@ export default function Recomender() {
 
   const addBookmark = (history_id) => {
     axios
-      .post("http://localhost:5000/bookmark", {
+      .post(process.env.NEXT_PUBLIC_BACKEND_URL + "/bookmark", {
         history_id: history_id, // Replace with your actual user_id variable
         user_id: localStorage.getItem("user_id"),
       })

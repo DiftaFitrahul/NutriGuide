@@ -54,7 +54,7 @@ export default function Home() {
 
   const getTrending = () => {
     axios
-      .get("http://localhost:5000/trending")
+      .get(process.env.NEXT_PUBLIC_BACKEND_URL + "/trending")
       .then((res) => {
         toast.success("Sukses Mendapatkan data Trending", {
           zIndex: 9999,
