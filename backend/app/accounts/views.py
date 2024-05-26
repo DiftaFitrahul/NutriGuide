@@ -287,3 +287,23 @@ def addTrending():
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)}), 500
+
+
+@accounts_bp.route('/trending', methods=['GET'])
+def getTrending():
+    try:
+        trending = Trending.query.all()
+
+        if not trending:
+            return jsonify(message="success", history=[]), 200
+
+        # Reverse the order of the trending records
+        reversed_trending = trending[::-1]
+
+        # Serialize the trending records
+        trending_list = [t.toDict() for t in reversed_trending]
+
+        return jsonify(message="success", trending=trending_list), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
