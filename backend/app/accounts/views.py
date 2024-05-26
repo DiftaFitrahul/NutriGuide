@@ -3,6 +3,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token, set_ac
 from app.accounts.models import User
 from app.accounts.models import History
 from app.accounts.models import Bookmark
+from app.accounts.models import Trending
 from app.db import db
 from app import bcrypt
 from app.mail import mail
@@ -199,13 +200,15 @@ def get_bookmark():
 @accounts_bp.route('/bookmark', methods=['DELETE'])
 def delete_bookmark():
     try:
-        bookmark_id = request.args.get('bookmark_id')
+        history_id = request.args.get("history_id")
+        user_id = request.args.get("user_id")
 
-        if not bookmark_id:
+        if not history_id or not user_id:
             return jsonify({"error": "Data tidak sesuai"}), 400
 
         # Find the bookmark by bookmark_id
-        bookmark = Bookmark.query.get(bookmark_id)
+        bookmark = Bookmark.query.filter_by(
+            user_id=user_id, history_id=history_id).first()
 
         if not bookmark:
             return jsonify({"error": "Bookmark tidak ditemukan"}), 404
@@ -217,6 +220,7 @@ def delete_bookmark():
         return jsonify(message="Bookmark berhasil dihapus"), 200
 
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 
@@ -241,6 +245,45 @@ def history():
         history_list = [h.toDict() for h in reversed_history]
 
         return jsonify(message="success", history=history_list), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
+
+@accounts_bp.route('/singlehistory', methods=['GET'])
+def singlehistory():
+    try:
+        history_id = request.args.get('history_id')
+
+        if history_id is None:
+            return jsonify({"error": "data json tidak sesuai"}), 400
+
+        history = History.query.filter_by(id=history_id).first()
+
+        if not history:
+            return jsonify(message="success", history={}), 200
+
+        return jsonify(message="success", history=history), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
+
+@accounts_bp.route('/trending', methods=['POST'])
+def addTrending():
+    try:
+        data = request.get_json()
+
+        title = data.get("title")
+        content = data.get("content")
+        image_url = data.get("image_url")
+
+        trending = Trending(title=title, image_url=image_url, content=content)
+
+        db.session.add(trending)
+        db.session.commit()
+
+        return jsonify(message="success menambahkan data trending"), 200
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)}), 500

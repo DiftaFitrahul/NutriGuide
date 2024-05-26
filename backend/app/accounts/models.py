@@ -29,7 +29,8 @@ class User(db.Model):
 
     def toDict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
-    
+
+
 class History(db.Model):
 
     __tablename__ = "history"
@@ -53,9 +54,10 @@ class History(db.Model):
     def toDict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
+
 class Bookmark(db.Model):
     __tablename__ = "bookmarks"
-    
+
     id = db.Column(db.String, primary_key=True)
     history_id = db.Column(db.String, ForeignKey('history.id'), nullable=False)
     user_id = db.Column(db.String, nullable=False)
@@ -68,6 +70,27 @@ class Bookmark(db.Model):
         self.id = str(uuid.uuid4())
         self.history_id = history.id
         self.user_id = history.user_id
+        self.created_on = datetime.now()
+
+    def toDict(self):
+        return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+
+
+class Trending(db.Model):
+    __tablename__ = "trending"
+
+    id = db.Column(db.String, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    image_url = db.Column(db.String, nullable=False)
+    content = db.Column(db.String, nullable=False)
+    created_on = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, title, image_url, content):
+        print("INIT DB")
+        self.id = str(uuid.uuid4())
+        self.title = title
+        self.image_url = image_url
+        self.content = content
         self.created_on = datetime.now()
 
     def toDict(self):
