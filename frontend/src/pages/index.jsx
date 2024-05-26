@@ -4,7 +4,7 @@ import HistoryComp from "@/components/HistoryComp";
 import TrendingComp from "@/components/TrendingComp";
 import Head from "next/head";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Sidebar } from "react-feather";
 import ProfileSection from "./profile";
 import RecomenderSection from "./recomender";
@@ -13,14 +13,24 @@ import { useRouter } from "next/navigation";
 import { LoadingContext } from "@/context/LoadingContext";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import lottie from "lottie-web";
 
 export default function Home() {
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [history, setHistory] = useState([]);
+  const animationContainer = useRef(null);
+  const animationInstance = useRef(null);
 
   useEffect(() => {
     setIsLoading(true);
+    animationInstance.current = lottie.loadAnimation({
+      container: animationContainer.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "/load_animation4.json",
+    });
     console.log("Cookies : " + Cookies.get("Auth"));
     if (Cookies.get("Auth") === undefined) {
       toast.error("Anda belum login!", {
@@ -33,6 +43,12 @@ export default function Home() {
     } else {
       setIsLoading(false);
     }
+    return () => {
+      if (animationInstance.current) {
+        animationInstance.current.destroy();
+        animationInstance.current = null;
+      }
+    };
   }, []);
 
   function logout() {
@@ -132,14 +148,24 @@ export default function Home() {
             </div>
             <>
               <div className="flex flex-auto flex-col w-[50px] h-full  overflow-auto">
-                <FoodContentComp />
-                <FoodContentComp />
-                <FoodContentComp />
-                <FoodContentComp />
-                <FoodContentComp />
-                <FoodContentComp />
-                <FoodContentComp />
-                <FoodContentComp />
+                <p className="font-bold text-black font-serif mt-10 text-center text-4xl">
+                  Selamat Datang Di Recomender Food
+                </p>
+                <div
+                  className="w-[400px] self-center mt-[50px]"
+                  ref={animationContainer}
+                ></div>
+                <p className="text-black mx-5 mt-8 text-lg">
+                  <l className="ml-10 text-lg">Recomender</l> food web app
+                  merupakan website rekomender makanan dalam bentuk chat dengan
+                  response berupa gambar ilustrasi makanan beserta bahan dan
+                  step untuk membuatnya. User dapat meminta resep makanan apapun
+                  dan data riwayat prompt user akan disimpan. User juga dapat
+                  bookmark prompt apabila dirasa prompt tersebut penting dan
+                  suatu saat ingin menggunakannya lagi. Silahkan mencoba dan
+                  menggunakan website ini dengan bijak dan benar. Terima kasih
+                  :)
+                </p>
               </div>
               <div className="flex flex-col flex-1 max-w-[370px] min-w-[200px]  ">
                 <h1 className="font-semibold text-black py-[10px] ml-[40px] mt-[20px]">

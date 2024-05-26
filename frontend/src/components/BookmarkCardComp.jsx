@@ -60,7 +60,7 @@ export default function BookmarkCard({
           <p className="text-black  text-[15px]">{formattedDate}</p>
         </div>
         <button
-          className="ml-[10px]"
+          className="ml-[10px] flex-shrink-0"
           onClick={() => {
             onDeleteBookmark();
           }}
@@ -68,8 +68,8 @@ export default function BookmarkCard({
           <Image
             src={"/trash_icon.png"}
             alt="coba"
-            width={40}
-            height={40}
+            width={25}
+            height={25}
             unoptimized={true}
           />
         </button>
