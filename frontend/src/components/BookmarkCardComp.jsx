@@ -30,7 +30,7 @@ export default function BookmarkCard({
       onClick={onClickBookmark}
     >
       <Image
-        src={imageUrl}
+        src={"https://drive.google.com/uc?id=1DJmf6-bxAtn61qk8-AtKd8pwE7SD5bnl"}
         alt="image"
         width={300}
         height={200}

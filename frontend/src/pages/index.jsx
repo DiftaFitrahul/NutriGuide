@@ -14,11 +14,12 @@ import { LoadingContext } from "@/context/LoadingContext";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import lottie from "lottie-web";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(LoadingContext);
-  const [history, setHistory] = useState([]);
+  const [trending, setTrending] = useState([]);
   const animationContainer = useRef(null);
   const animationInstance = useRef(null);
 
@@ -41,7 +42,7 @@ export default function Home() {
         setIsLoading(false);
       }, 1000);
     } else {
-      setIsLoading(false);
+      getTrending();
     }
     return () => {
       if (animationInstance.current) {
@@ -50,6 +51,24 @@ export default function Home() {
       }
     };
   }, []);
+
+  const getTrending = () => {
+    axios
+      .get("http://localhost:5000/trending")
+      .then((res) => {
+        toast.success("Sukses Mendapatkan data Trending", {
+          zIndex: 9999,
+        });
+        setTrending(res.data.trending);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast.error("Gagal mendapatkan data Trending", {
+          zIndex: 9999,
+        });
+        setIsLoading(false);
+      });
+  };
 
   function logout() {
     Cookies.remove("Auth");
@@ -158,16 +177,17 @@ export default function Home() {
                   Trending
                 </h1>
                 <div className="flex flex-col h-3/6 w-[150px] md:w-[250px] px-[10px]  ml-[20px] lg:ml-[40px]  rounded-3xl border border-black border-opacity-50 overflow-auto">
-                  <TrendingComp
-                    onClickMenu={(data) => {
-                      console.log("makan nasi " + data);
-                    }}
-                  />
-                  <TrendingComp />
-                  <TrendingComp />
-                  <TrendingComp />
-                  <TrendingComp />
-                  <TrendingComp />
+                  {trending.map((message, index) => (
+                    <TrendingComp
+                      title={message.title}
+                      onClickMenu={() => {
+                        router.push({
+                          pathname: "/detail/trending",
+                          query: message,
+                        });
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
             </>
