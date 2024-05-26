@@ -6,6 +6,7 @@ export default function BookmarkCard({
   imageUrl,
   date,
   onDeleteBookmark,
+  onClickBookmark,
 }) {
   //   const IDR = new Intl.NumberFormat("id-ID", {
   //     style: "currency",
@@ -40,7 +41,10 @@ export default function BookmarkCard({
   });
 
   return (
-    <div className="flex flex-col max-[350px]:w-[100px] max-[500px]:w-[170px] max-[600px]:w-[200px] w-[270px] shadow-xl bg-white rounded-3xl ">
+    <div
+      className="flex flex-col max-[350px]:w-[100px] max-[500px]:w-[170px] max-[600px]:w-[200px] w-[270px] shadow-xl bg-white rounded-3xl "
+      onClick={onClickBookmark}
+    >
       <Image
         src={imageUrl}
         alt="image"

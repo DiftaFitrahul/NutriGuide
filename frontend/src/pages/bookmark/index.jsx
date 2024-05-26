@@ -182,6 +182,12 @@ export default function Bookmark() {
                     onDeleteBookmark={() => {
                       deleteBookmark(message.id);
                     }}
+                    onClickBookmark={() => {
+                      router.push({
+                        pathname: "/detail/history",
+                        query: message,
+                      });
+                    }}
                   />
                 ))}
               </div>
