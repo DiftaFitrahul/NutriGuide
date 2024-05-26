@@ -39,7 +39,7 @@ export default function detailTrending() {
             {dataTrending.title}
           </div>
           <div className="flex-1 flex-col w-full p-2 bg-blue-50 border border-gray-300 rounded-lg  text-black overflow-auto">
-            <img src={dataTrending.image_url} className="w-[300px]" />
+            <img src={dataTrending.image_url} className="w-[500px]" />
             <div>{newText}</div>
             <p className="font-semibold mt-5">
               {"Dibuat : " + formattedDate} WIB

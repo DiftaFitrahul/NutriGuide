@@ -22,7 +22,7 @@ const Message = ({ prompt, answer }) => {
         {prompt}
       </div>
       <div className="flex-1 flex-col  p-2 bg-blue-50 border border-gray-300 rounded-lg  text-black overflow-auto">
-        <img src={answer.image_url} className="w-[300px]" />
+        <img src={answer.image_url} className="w-[450px]" />
         <div>{newText}</div>
         {/* <pre>{answer.response}</pre> */}
       </div>

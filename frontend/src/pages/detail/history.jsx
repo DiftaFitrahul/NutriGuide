@@ -39,11 +39,7 @@ export default function detailHistory() {
             {dataHistory.prompt}
           </div>
           <div className="flex-1 flex-col w-full p-2 bg-blue-50 border border-gray-300 rounded-lg  text-black overflow-auto">
-            <img
-              src="https://drive.google.com/thumbnail?id=1iR2Prxrd3pjU5qaS4ayJG9rg8VCjb4c8&sz=w1000"
-              alt="drive image"
-              className="w-[500px]"
-            />
+            <img src={dataHistory.image_url} className="w-[500px]" />
             <div>{newText}</div>
             <p className="font-semibold mt-5">
               {"Dibuat : " + formattedDate} WIB
