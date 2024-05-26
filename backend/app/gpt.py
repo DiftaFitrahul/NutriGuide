@@ -21,7 +21,7 @@ def dall_e(gpt_content):
     dall_e_prompt = f"Create a realistic image of {gpt_content}"
 
     dall_e_response = client.images.generate(
-        model="dall-e-2",
+        model="dall-e-3",
         prompt=dall_e_prompt,
         n=1,
         size="1024x1024"
