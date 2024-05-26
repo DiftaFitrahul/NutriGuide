@@ -8,22 +8,6 @@ export default function BookmarkCard({
   onDeleteBookmark,
   onClickBookmark,
 }) {
-  //   const IDR = new Intl.NumberFormat("id-ID", {
-  //     style: "currency",
-  //     currency: "IDR",
-  //   });
-  //   const maxLengthTitle = 17;
-  //   const trimmedTitle =
-  //     title.length > maxLengthTitle
-  //       ? `${title.slice(0, maxLengthTitle)}...`
-  //       : title;
-
-  //   const maxLengthSubtitle = 100;
-  //   const trimmedSubtitle =
-  //     subtitle.length > maxLengthSubtitle
-  //       ? `${subtitle.slice(0, maxLengthSubtitle)}...`
-  //       : subtitle;
-
   // Parse the string into a Date object
   const newDate = new Date(date);
 
@@ -56,7 +40,9 @@ export default function BookmarkCard({
       />
       <div className="flex flex-row items-start mt-4 mx-3 mb-3">
         <div className="flex flex-col items-start ">
-          <p className="text-black font-bold text-[17px]">{title}</p>
+          <p className="text-black font-bold text-[17px] truncate-2-lines">
+            {title}
+          </p>
           <p className="text-black  text-[15px]">{formattedDate}</p>
         </div>
         <button

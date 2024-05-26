@@ -93,20 +93,6 @@ export default function Home() {
               <button
                 className=" flex flex-row items-center text-black text-lg pb-[7px]"
                 onClick={() => {
-                  router.replace("/profile");
-                }}
-              >
-                <Image
-                  src={"/profile_icon.png"}
-                  alt="email"
-                  width={30}
-                  height={30}
-                />
-                <p className={`pl-[7px] `}>Profile</p>
-              </button>
-              <button
-                className=" flex flex-row items-center text-black text-lg pb-[7px]"
-                onClick={() => {
                   router.replace("/recomender");
                 }}
               >

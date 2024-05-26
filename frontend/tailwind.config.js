@@ -15,5 +15,17 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.truncate-2-lines': {
+          display: '-webkit-box',
+          '-webkit-box-orient': 'vertical',
+          overflow: 'hidden',
+          '-webkit-line-clamp': '2',
+          'line-clamp': '2',
+        },
+      });
+    },
+  ],
 };
